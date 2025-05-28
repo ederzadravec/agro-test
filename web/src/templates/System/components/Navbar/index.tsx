@@ -1,5 +1,7 @@
 import React from "react";
 
+import Logo from "#/assets/svg/logo.svg";
+
 import * as S from "./styled";
 
 const Navbar: React.FC = () => {
@@ -7,7 +9,7 @@ const Navbar: React.FC = () => {
     <S.Container>
       <S.Content id="content">
         <S.Row to="/dashboard">
-          <S.HomeIcon />
+          <S.HomeIcon as={Logo} />
           <S.Label>Home</S.Label>
         </S.Row>
 

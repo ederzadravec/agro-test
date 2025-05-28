@@ -19,7 +19,8 @@
     "react-spinners": "^0.17.0",
     "react-text-mask": "^5.5.0",
     "styled-components": "^6.1.18",
-    "text-mask-addons": "^3.8.0"
+    "text-mask-addons": "^3.8.0",
+    "vite-plugin-svgr": "^4.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

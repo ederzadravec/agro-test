@@ -1,12 +1,27 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background: #f1f2f3;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url(src/assets/svg/logo.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    z-index: -1;
+  }
 `;
 
 export const Content = styled.div`
