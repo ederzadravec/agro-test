@@ -44,7 +44,7 @@ export default class CultivatedPlant extends BaseModel {
 
   @hasOne(() => Harvest, {
     foreignKey: 'id',
-    localKey: 'productor_id',
+    localKey: 'harvest_id',
     onQuery: (query) => query.select('id', 'name'),
   })
   declare harvest: HasOne<typeof Harvest>

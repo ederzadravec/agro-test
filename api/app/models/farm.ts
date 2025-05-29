@@ -23,13 +23,13 @@ export default class Farm extends BaseModel {
   declare state_id: number
 
   @column()
-  declare totalArea: number
+  declare total_area: number
 
   @column()
-  declare areableArea: number
+  declare areable_area: number
 
   @column()
-  declare vegetationArea: number
+  declare vegetation_area: number
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

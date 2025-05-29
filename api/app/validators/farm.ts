@@ -6,6 +6,7 @@ export const indexFarmValidator = vine.compile(
   vine.object({
     page: vine.number().optional(),
     limit: vine.number().optional(),
+    productor: vine.number().optional(),
   })
 )
 
@@ -15,9 +16,9 @@ export const createFarmValidator = vine.compile(
     productor: vine.number(),
     city: vine.string().trim(),
     state: vine.number(),
-    totalArea: vine.number().use(totalAreaRule()),
-    areableArea: vine.number(),
-    vegetationArea: vine.number(),
+    total_area: vine.number().use(totalAreaRule()),
+    areable_area: vine.number(),
+    vegetation_area: vine.number(),
   })
 )
 
@@ -27,8 +28,8 @@ export const updateFarmValidator = vine.compile(
     productor: vine.number(),
     city: vine.string().trim(),
     state: vine.number(),
-    totalArea: vine.number(),
-    areableArea: vine.number(),
-    vegetationArea: vine.number(),
+    total_area: vine.number(),
+    areable_area: vine.number(),
+    vegetation_area: vine.number(),
   })
 )

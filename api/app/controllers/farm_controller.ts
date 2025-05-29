@@ -6,7 +6,11 @@ export default class FarmController {
   async index({ request }: HttpContext) {
     const query = await indexFarmValidator.validate(request.all())
 
-    return await Farm.query()
+    const operation = Farm.query()
+
+    if (query.productor) operation.where('productor_id', query.productor)
+
+    return await operation
       .orderBy('name', 'asc')
       .preload('productor')
       .preload('state')
@@ -22,9 +26,9 @@ export default class FarmController {
       productor_id: payload.productor,
       state_id: payload.state,
       city: payload.city,
-      totalArea: payload.totalArea,
-      vegetationArea: payload.vegetationArea,
-      areableArea: payload.areableArea,
+      total_area: payload.total_area,
+      vegetation_area: payload.vegetation_area,
+      areable_area: payload.areable_area,
     })
 
     return response.status(200)
@@ -48,9 +52,9 @@ export default class FarmController {
     farm.productor_id = payload.productor
     farm.state_id = payload.state
     farm.city = payload.city
-    farm.totalArea = payload.totalArea
-    farm.vegetationArea = payload.vegetationArea
-    farm.areableArea = payload.areableArea
+    farm.total_area = payload.total_area
+    farm.vegetation_area = payload.vegetation_area
+    farm.areable_area = payload.areable_area
 
     await farm?.save()
   }
