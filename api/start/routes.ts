@@ -1,16 +1,8 @@
-/*
-|--------------------------------------------------------------------------
-| Routes file
-|--------------------------------------------------------------------------
-|
-| The routes file is used for defining the HTTP routes.
-|
-*/
-
 import router from '@adonisjs/core/services/router'
+import { middleware } from '#start/kernel'
 
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
-})
+router.resource('session', '#controllers/session_controller')
+router.resource('user', '#controllers/user_controller').use('*', middleware.auth())
+router.resource('productor', '#controllers/productor_controller').use('*', middleware.auth())
+router.resource('info-state', '#controllers/info_state_controller').use('*', middleware.auth())
+router.resource('farm', '#controllers/farm_controller').use('*', middleware.auth())

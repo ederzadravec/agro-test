@@ -1,5 +1,5 @@
 {
-  "name": "hello-world",
+  "name": "api",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -57,7 +57,7 @@
     "@adonisjs/lucid": "^21.6.1",
     "@vinejs/vine": "^3.0.1",
     "luxon": "^3.6.1",
-    "mysql2": "^3.14.1",
+    "pg": "^8.16.0",
     "reflect-metadata": "^0.2.2"
   },
   "hotHook": {
