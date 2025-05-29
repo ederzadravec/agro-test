@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 import { FormGrid, TextField, Button, Footer } from "#/components";
 import type { FormConfig } from "#/components";
-import { useForm } from "#/hooks";
+import { useForm, useService } from "#/hooks";
+import { AuthContext } from "#/contexts";
+import { getErrors } from "#/utils/api";
 
 import * as S from "./styled";
 import validate from "#/utils/validate";
@@ -14,12 +16,38 @@ const validations = {
 };
 
 const Login: React.FC = () => {
+  const { state, setAuth } = AuthContext.useAuth();
   const navigate = useNavigate();
   const [form, onChange] = useForm({ validations });
 
-  const handelOnSubmit = (data: Record<string, any>) => {
+  const loginService = useService("post", "/session", null, false);
+
+  const handelOnSubmit = async () => {
+    const data = {
+      login: form.getValue("login"),
+      password: form.getValue("password"),
+    };
+
+    const response = await loginService.fetch(data);
+
+    if (response.errors) {
+      const errors = getErrors(response, true);
+      form.setErrors(errors);
+      return;
+    }
+
+    const token = response.token;
+
+    setAuth({ isLogged: true, token });
+
     navigate("/dashboard");
   };
+
+  React.useEffect(() => {
+    if (state.isLogged && state.token) {
+      navigate("/dashboard");
+    }
+  }, [state]);
 
   const formConfig: FormConfig = [
     [
@@ -55,7 +83,9 @@ const Login: React.FC = () => {
       <FormGrid config={formConfig} />
 
       <Footer>
-        <Button onClick={form.trySave(handelOnSubmit)}>Entrar</Button>
+        <Button onClick={form.trySave(handelOnSubmit)} loading={loginService.loading}>
+          Entrar
+        </Button>
       </Footer>
     </>
   );

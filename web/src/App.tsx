@@ -1,8 +1,11 @@
 import React from "react";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
+import { ToastContainer } from "react-toastify";
+
+import { AuthContext } from "#/contexts";
+import { ConfirmDialog } from "#/components";
 
 import theme from "./assets/theme";
-
 import Routes from "./Routes";
 
 const GlobalStyle = createGlobalStyle`
@@ -27,7 +30,12 @@ const App: React.FC = () => {
       <GlobalStyle />
 
       <ThemeProvider theme={theme}>
-        <Routes />
+        <AuthContext.Provider>
+          <Routes />
+        </AuthContext.Provider>
+
+        <ConfirmDialog.Provider />
+        <ToastContainer position="top-center" />
       </ThemeProvider>
     </>
   );

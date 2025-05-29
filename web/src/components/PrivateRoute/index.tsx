@@ -3,15 +3,21 @@ import React from "react";
 import { AuthContext } from "#/contexts";
 
 interface PrivateRouteProps {
-  type: "ADMIN" | "COMPANY";
   children: any;
 }
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ type, children }) => {
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const { state } = AuthContext.useAuth();
 
-  if (!state.isLogged || state.user?.type !== type) return (window.location.href = "/auth");
+  React.useEffect(() => {
+    if (!state.isLogged || !state.token) {
+      window.location.href = "/logout";
+    }
+  }, []);
 
-  return children;
+  if (state.isLogged) return children;
+
+  return null;
 };
 
 export default PrivateRoute;

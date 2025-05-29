@@ -14,7 +14,7 @@ const isEmpty = (message?: string): TValidate => [
 ];
 
 const isEmptySelect = (message?: string): TValidate => [
-  (value: { value?: any; _id?: string }) => !value || (!value?.value && !value?._id),
+  (value: { value?: any; id?: string }) => !value || (!value?.value && !value?.id),
   message || "Campo deve ser preenchido.",
 ];
 

@@ -1,8 +1,7 @@
 import React from "react";
-import * as R from "ramda";
 
 import { Loader } from "#/components";
-import { useState, useService } from "#/hooks";
+import { useState } from "#/hooks";
 import type * as Types from "types/contexts/auth";
 
 interface AuthContextProps {
@@ -19,18 +18,6 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   const [state, setState] = useState<Types.IAuthState>({});
   const [loaded, setLoaded] = useState<boolean>(false);
 
-  const getAuthService = useService("get", "auth/data", {}, false);
-
-  const getUserData = async (token: string) => {
-    const result = await getAuthService.fetch({}, { token }, { authorization: token });
-
-    if (result?.data?.status === "OK") {
-      return R.omit(["status"], result.data);
-    }
-
-    setLogout();
-  };
-
   const setLogout = (redirect: boolean = true) => {
     localStorage.removeItem("auth");
     setState(() => ({}));
@@ -41,9 +28,7 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   const setAuth = async (data: Types.IAuthState) => {
     localStorage.setItem("auth", JSON.stringify(data));
 
-    getUserData(data.token!).then((sessionData) => {
-      setState({ ...data, ...sessionData });
-    });
+    setState({ ...data });
   };
 
   React.useEffect(() => {
@@ -65,14 +50,8 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
       return;
     }
 
-    getUserData(data.token!)
-      .then((sessionData) => {
-        setState({ ...data, ...sessionData });
-        setLoaded(true);
-      })
-      .catch(() => {
-        setLoaded(true);
-      });
+    setState({ ...data });
+    setLoaded(true);
   }, []);
 
   const value = {

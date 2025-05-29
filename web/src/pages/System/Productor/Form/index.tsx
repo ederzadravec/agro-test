@@ -1,11 +1,13 @@
 import React from "react";
 import { MdChevronLeft } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { Title, Button, FormGrid, TextField, Footer } from "#/components";
 import type { FormConfig } from "#/components";
-import { useForm } from "#/hooks";
+import { useForm, useService } from "#/hooks";
 import validate from "#/utils/validate";
+import { getErrors } from "#/utils/api";
 
 const validations = {
   cnpj: [validate.isEmpty(), validate.isCNPJ()],
@@ -14,11 +16,41 @@ const validations = {
 
 const Form: React.FC = () => {
   const navigate = useNavigate();
+  const params = useParams() as { id: string };
   const [form, onChange] = useForm({ validations });
 
-  const handleOnSave = () => {
+  const isEditing = !!params.id;
+
+  const createService = useService("post", "/productor", null, false);
+  const updateService = useService("put", `/productor/${params.id}`, null, false);
+  const loadService = useService("get", `/productor/${params.id}`, null, isEditing);
+
+  const handleOnSave = async () => {
+    const data = {
+      cnpj: form.getValue("cnpj"),
+      name: form.getValue("name"),
+    };
+
+    const response = isEditing ? await updateService.fetch(data) : await createService.fetch(data);
+
+    if (response.errors) {
+      const errors = getErrors(response, true);
+      form.setErrors(errors);
+      return;
+    }
+
+    toast.success("Salvo com sucesso");
     navigate("/productor");
   };
+
+  React.useEffect(() => {
+    if (loadService.data) {
+      form.setValues({
+        cnpj: loadService.data.cnpj,
+        name: loadService.data.name,
+      });
+    }
+  }, [loadService.data]);
 
   const formConfig: FormConfig = [
     [
@@ -50,15 +82,17 @@ const Form: React.FC = () => {
 
   return (
     <>
-      <Title title="Novo Produtor">
+      <Title title={isEditing ? "Alterar Produtor" : "Novo Produtor"}>
         <Button variant="outlined" icon={MdChevronLeft} to="/productor">
           Voltar
         </Button>
       </Title>
 
-      <FormGrid config={formConfig}>
+      <FormGrid config={formConfig} loading={loadService.loading}>
         <Footer>
-          <Button onClick={form.trySave(handleOnSave)}>Salvar</Button>
+          <Button onClick={form.trySave(handleOnSave)} loading={createService.loading}>
+            Salvar
+          </Button>
         </Footer>
       </FormGrid>
     </>

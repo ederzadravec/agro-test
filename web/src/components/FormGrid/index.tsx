@@ -4,8 +4,13 @@ import type * as Types from "./types";
 import * as S from "./styled";
 
 import Row from "./components/Row";
+import Loader from "../Loader";
 
-const FormGrid: React.FC<Types.FormGridProps> = ({ config, children, ...props }) => {
+const FormGrid: React.FC<Types.FormGridProps> = ({ config, children, loading, ...props }) => {
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <S.Container {...props}>
       {config.map((row, key) => (

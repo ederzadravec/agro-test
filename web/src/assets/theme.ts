@@ -26,7 +26,7 @@ export const warning = {
 
 export const error = {
   main: "#EA5455",
-  text: text.dark,
+  text: text.light,
 };
 
 export const white = {

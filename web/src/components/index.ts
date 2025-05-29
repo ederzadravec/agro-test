@@ -1,5 +1,6 @@
 export { default as BaseInput } from "./BaseInput";
 export { default as Button } from "./Button";
+export { default as ConfirmDialog } from "./ConfirmDialog";
 export { default as Filter } from "./Filter";
 export { default as Footer } from "./Footer";
 export { default as FormGrid } from "./FormGrid";

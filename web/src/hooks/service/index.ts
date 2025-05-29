@@ -25,8 +25,7 @@ const useService = <ResponseType = any, Params = any, RouteParams = any>(
       method: type,
       url: resolvedRoute,
       headers: {
-        authorization: state?.token || "",
-        userToken: state?.token || "",
+        authorization: `Bearer ${state?.token}`,
         ...headers,
       },
       ...methodParams,

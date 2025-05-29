@@ -24,4 +24,5 @@ export interface FormGridRowProps {
 export interface FormGridProps {
   config: Array<Array<FormGridColumnProps>>;
   children?: any;
+  loading?: boolean;
 }

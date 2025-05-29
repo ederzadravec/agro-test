@@ -9,6 +9,7 @@ const Productor: React.FC = () => {
     <Routes>
       <Route index Component={List} />
       <Route path="/new" Component={Form} />
+      <Route path="/:id" Component={Form} />
     </Routes>
   );
 };

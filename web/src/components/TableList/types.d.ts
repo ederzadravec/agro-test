@@ -8,8 +8,8 @@ export interface ColumnProps {
 }
 
 export interface Paginate {
-  limit: number;
-  page: number;
-  pages: number;
+  perPage: number;
+  currentPage: number;
+  lastPage: number;
   total: number;
 }
