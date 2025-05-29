@@ -77,7 +77,7 @@ const List: React.FC = () => {
   return (
     <>
       <Title title="Fazendas">
-        <Button to="/farm/new">Novo</Button>
+        <Button to="/farm/new">Nova</Button>
       </Title>
 
       <TableList

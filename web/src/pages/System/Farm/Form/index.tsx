@@ -16,15 +16,15 @@ const validations = {
   name: [validate.isEmpty()],
   state: [validate.isEmptySelect()],
   city: [validate.isEmpty()],
-  totalArea: [
+  total_area: [
     validate.isEmpty(),
     [
-      (data, form) => formatNumber(form.areableArea) + formatNumber(form.vegetationArea) > formatNumber(data),
+      (data, form) => formatNumber(form.areable_area) + formatNumber(form.vegetation_area) > formatNumber(data),
       "A soma das áreas agricultável e de vegetação não pode ser maior que a área total",
     ] as Validation,
   ],
-  areableArea: [validate.isEmpty()],
-  vegetationArea: [validate.isEmpty()],
+  areable_area: [validate.isEmpty()],
+  vegetation_area: [validate.isEmpty()],
 };
 
 const Form: React.FC = () => {
@@ -46,9 +46,9 @@ const Form: React.FC = () => {
       name: form.getValue("name"),
       state: form.getValue("state").id,
       city: form.getValue("city"),
-      totalArea: parseInt(form.getValue("totalArea")),
-      areableArea: parseInt(form.getValue("areableArea")),
-      vegetationArea: parseInt(form.getValue("vegetationArea")),
+      total_area: parseInt(form.getValue("total_area")),
+      areable_area: parseInt(form.getValue("areable_area")),
+      vegetation_area: parseInt(form.getValue("vegetation_area")),
     };
 
     const response = isEditing ? await updateService.fetch(data) : await createService.fetch(data);
@@ -70,9 +70,9 @@ const Form: React.FC = () => {
         name: loadService.data.name,
         state: loadService.data.state,
         city: loadService.data.city,
-        totalArea: loadService.data.totalArea,
-        areableArea: loadService.data.areableArea,
-        vegetationArea: loadService.data.vegetationArea,
+        total_area: loadService.data.total_area,
+        areable_area: loadService.data.areable_area,
+        vegetation_area: loadService.data.vegetation_area,
       });
     }
   }, [loadService.data]);
@@ -132,7 +132,7 @@ const Form: React.FC = () => {
     ],
     [
       {
-        schema: "totalArea",
+        schema: "total_area",
         size: { md: 3 },
         type: TextField,
         props: (schema): React.ComponentProps<typeof TextField> => ({
@@ -147,7 +147,7 @@ const Form: React.FC = () => {
         }),
       },
       {
-        schema: "areableArea",
+        schema: "areable_area",
         size: { md: 3 },
         type: TextField,
         props: (schema): React.ComponentProps<typeof TextField> => ({
@@ -162,7 +162,7 @@ const Form: React.FC = () => {
         }),
       },
       {
-        schema: "vegetationArea",
+        schema: "vegetation_area",
         size: { md: 3 },
         type: TextField,
         props: (schema): React.ComponentProps<typeof TextField> => ({

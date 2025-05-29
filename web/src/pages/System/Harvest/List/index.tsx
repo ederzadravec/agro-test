@@ -1,25 +1,52 @@
 import React from "react";
 import { MdEdit, MdDelete } from "react-icons/md";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import { Title, TableList, Button, TableListButtons } from "#/components";
+import { Title, TableList, Button, TableListButtons, ConfirmDialog } from "#/components";
 import type { TableListButtonsProps } from "#/components";
+import { useService } from "#/hooks";
 
 const List: React.FC = () => {
+  const navigate = useNavigate();
+  const [query, setQuery] = useSearchParams({ page: "1", limit: "10" });
+
+  const listService = useService("GET", "/harvest", query, true, [query]);
+  const removeService = useService("DELETE", (id) => `/harvest/${id}`, {}, false);
+
+  const handleOnRemove = async (data: { id: string }) => {
+    await removeService.fetch({}, data.id);
+    toast.success("Removido com sucesso");
+    listService.fetch();
+  };
+
+  const onChangePage = (page: number) => {
+    query.set("page", page.toString());
+    setQuery(query);
+  };
+
   const listButtons: TableListButtonsProps["config"] = [
     {
       icon: () => MdEdit,
       label: "Editar",
       onClick: (data) => {
-        console.log("Edit action clicked for:", data);
-        // Navigate to edit page or perform edit action
+        navigate(`/harvest/${data.id}`);
       },
     },
     {
       icon: () => MdDelete,
       label: "Excluir",
       onClick: (data) => {
-        console.log("Delete action clicked for:", data);
-        // Perform delete action
+        ConfirmDialog.open({
+          type: "error",
+          message: `Deseja apagar ${data.name}?`,
+          actions: [
+            {
+              label: "Confirmar",
+              onClick: () => handleOnRemove(data),
+            },
+          ],
+        });
       },
     },
   ];
@@ -27,12 +54,12 @@ const List: React.FC = () => {
   const listConfig = [
     {
       size: { md: 4 },
-      path: "productor",
+      path: "productor.name",
       title: "Produtor",
     },
     {
       size: { md: 4 },
-      path: "farm",
+      path: "farm.name",
       title: "Fazenda",
     },
     {
@@ -48,31 +75,21 @@ const List: React.FC = () => {
     },
   ];
 
-  const data = [
-    {
-      productor: "João da Silva",
-      farm: "Fazenda Boa Vista",
-      name: 2023,
-    },
-    {
-      productor: "Maria Oliveira",
-      farm: "Fazenda Esperança",
-      name: 2023,
-    },
-    {
-      productor: "Carlos Souza",
-      farm: "Fazenda Santa Clara",
-      name: 2023,
-    },
-  ];
-
   return (
     <>
       <Title title="Safras">
-        <Button to="/harvest/new">Novo</Button>
+        <Button to="/harvest/new">Nova</Button>
       </Title>
 
-      <TableList config={listConfig} data={data} />
+      <TableList
+        config={listConfig}
+        data={listService?.data}
+        dataPath="data"
+        paginate
+        paginatePath="meta"
+        onChangePage={onChangePage}
+        loading={listService.loading || removeService.loading}
+      />
     </>
   );
 };

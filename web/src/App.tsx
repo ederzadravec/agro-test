@@ -1,12 +1,15 @@
 import React from "react";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { ToastContainer } from "react-toastify";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 import { AuthContext } from "#/contexts";
 import { ConfirmDialog } from "#/components";
 
 import theme from "./assets/theme";
 import Routes from "./Routes";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const GlobalStyle = createGlobalStyle`
   html, body, #root {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "styled-components";
 import ReactSelect, { components } from "react-select";
-import type { IndicatorsContainerProps, Props, MultiValueProps, SingleValueProps } from "react-select";
+import type { IndicatorsContainerProps, Props, MultiValueProps, SingleValueProps, SelectInstance } from "react-select";
 import * as R from "ramda";
 
 import BaseInput from "../BaseInput";
@@ -18,6 +18,8 @@ interface SelectFieldProps extends Omit<Props, "onChange"> {
 
 const SelectField: React.FC<SelectFieldProps> = ({ label, value, onChange, isRequired, error, options, format, ...props }) => {
   const theme = useTheme();
+
+  const inputRef = React.useRef<SelectInstance<any> | null>(null);
 
   const handleOnChange = (values) => {
     onChange?.(values);
@@ -90,6 +92,12 @@ const SelectField: React.FC<SelectFieldProps> = ({ label, value, onChange, isReq
     return { ...value, value: value?.[newFormat.value], label: value?.[newFormat.label] };
   }, [format, value]);
 
+  React.useEffect(() => {
+    if (!value) {
+      inputRef.current?.clearValue();
+    }
+  }, [value]);
+
   return (
     <BaseInput error={error}>
       <S.Container>
@@ -100,6 +108,7 @@ const SelectField: React.FC<SelectFieldProps> = ({ label, value, onChange, isReq
 
         <S.InputContent>
           <ReactSelect
+            ref={inputRef}
             styles={customStyles}
             placeholder=""
             noOptionsMessage={() => "Lista vazia"}

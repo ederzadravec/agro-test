@@ -19,8 +19,8 @@ export const Container = styled.div<{ type: PaletteColorsEnum }>`
   align-items: center;
   min-height: 100px;
   width: 100%;
-  background: ${({ theme, type }) => theme.palette[type].main};
-  color: ${({ theme, type }) => theme.palette[type].text};
+  background: #fff;
+  color: ${({ theme, type }) => theme.palette[type].main};
   padding: 20px 0;
 `;
 
@@ -36,6 +36,7 @@ export const Content = styled.div`
 
 export const Title = styled.span`
   font-size: 24px;
+  font-weight: 600;
 `;
 
 export const Message = styled.span`

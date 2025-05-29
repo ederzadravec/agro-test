@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  box-shadow: 1px 1px 4px -1px #333;
+  background: #fff;
+  border-radius: 4px;
+`;
 
 export const EmptyList = styled.div`
   display: flex;

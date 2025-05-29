@@ -13,7 +13,7 @@ export interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Grid: React.FC<GridProps> = ({
   container = false,
-  spacing = 12,
+  spacing = 20,
   direction = 'row',
   size = { md: 12 },
   children,

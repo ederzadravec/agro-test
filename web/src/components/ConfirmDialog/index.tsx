@@ -49,12 +49,12 @@ const ConfirmDialog: React.FC = () => {
 
           <S.Message>{message.message}</S.Message>
           <S.Footer>
-            <Button color="white" variant="outlined" onClick={() => setMessage(undefined)}>
+            <Button variant="outlined" onClick={() => setMessage(undefined)}>
               Voltar
             </Button>
 
             {message.actions.map((action) => (
-              <Button color={action.color || "white"} onClick={handleOnAction(action.onClick)} loading={loading}>
+              <Button variant="outlined" color={action.color || "success"} onClick={handleOnAction(action.onClick)} loading={loading}>
                 {action.label}
               </Button>
             ))}
