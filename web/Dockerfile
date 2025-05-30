@@ -1,10 +1,14 @@
 FROM node:20
 WORKDIR /web
 COPY . .
+
+ARG _VITE_API_URI
+ENV VITE_API_URI=${_VITE_API_URI}
+
+
 RUN yarn 
 RUN yarn build
 
-ENV _VITE_API_URI $VITE_API_URI
 
 EXPOSE 8080
 CMD ["yarn","start"]
