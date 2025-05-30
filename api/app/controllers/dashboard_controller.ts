@@ -4,6 +4,11 @@ import Farm from '#models/farm'
 import CultivatedPlant from '#models/cultivated_plant'
 
 export default class DashboardController {
+  /**
+   * @total
+   * @description Retorna os contadores
+   * @responseBody 200 - { farms: 0, total_area_sum: 0, areable_area_sum: 1, vegetation_area_sum: 1 }
+   */
   async total({}: HttpContext) {
     const result = await Farm.query()
       .sum('total_area as total_area_sum')
@@ -20,6 +25,11 @@ export default class DashboardController {
     }
   }
 
+  /**
+   * @byState
+   * @description Retorna os estados e a quantidade de cada um
+   * @responseBody 200 - [{ "state": "<InfoState>", "total": 1 }]
+   */
   async byState({}: HttpContext) {
     const result = await Farm.query()
       .groupBy('state_id')
@@ -33,6 +43,11 @@ export default class DashboardController {
     }))
   }
 
+  /**
+   * @byCultivatedPlant
+   * @description Retornas culturas plantadas e a quantidade de cada uma
+   * @responseBody 200 - [{ "name": "nome", "total": 1 }]
+   */
   async byCultivatedPlant({}: HttpContext) {
     const result = await CultivatedPlant.query().groupBy('name').count('* as total').select('name')
 

@@ -9,14 +9,14 @@ export const indexProductorValidator = vine.compile(
 
 export const createProductorValidator = vine.compile(
   vine.object({
-    name: vine.string().trim().minLength(6),
+    name: vine.string().trim(),
     cnpj: vine.string().trim().minLength(14).unique({ table: 'productors', column: 'cnpj' }),
   })
 )
 
 export const updateProductorValidator = vine.compile(
   vine.object({
-    name: vine.string().trim().minLength(6),
+    name: vine.string().trim(),
     cnpj: vine
       .string()
       .trim()
