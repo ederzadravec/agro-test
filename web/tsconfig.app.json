@@ -5,7 +5,7 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "skipLibCheck": false,
+    "skipLibCheck": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -24,7 +24,6 @@
     "noUncheckedSideEffectImports": true,
 
     "noImplicitAny": false,
-    "types": ["./src/@types", "./node_modules/@types"],
     "baseUrl": "./src",
     "paths": {
       "types/*": ["./@types/*"],

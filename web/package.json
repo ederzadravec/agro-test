@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build ",
+    "start": "serve -s dist -p 8080",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "jest"
@@ -21,6 +22,7 @@
     "react-spinners": "^0.17.0",
     "react-text-mask": "^5.5.0",
     "react-toastify": "^11.0.5",
+    "serve": "^14.2.4",
     "styled-components": "^6.1.18",
     "text-mask-addons": "^3.8.0",
     "vite-plugin-svgr": "^4.3.0"
