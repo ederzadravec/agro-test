@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Logo from "#/assets/svg/logo.svg";
 
 export const Container = styled.div`
   display: flex;
@@ -13,10 +14,10 @@ export const Container = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url(src/assets/svg/logo.svg);
+    background-image: url(${Logo});
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 80%;
+    background-size: 80% 80%;
     width: 100%;
     height: 100%;
     opacity: 0.1;
