@@ -16,15 +16,15 @@ const validations = {
   name: [validate.isEmpty()],
   state: [validate.isEmptySelect()],
   city: [validate.isEmpty()],
-  total_area: [
+  totalArea: [
     validate.isEmpty(),
     [
-      (data, form) => formatNumber(form.areable_area) + formatNumber(form.vegetation_area) > formatNumber(data),
+      (data, form) => formatNumber(form.areableArea) + formatNumber(form.vegetationArea) > formatNumber(data),
       "A soma das áreas agricultável e de vegetação não pode ser maior que a área total",
     ] as Validation,
   ],
-  areable_area: [validate.isEmpty()],
-  vegetation_area: [validate.isEmpty()],
+  areableArea: [validate.isEmpty()],
+  vegetationArea: [validate.isEmpty()],
 };
 
 const Form: React.FC = () => {
@@ -46,9 +46,9 @@ const Form: React.FC = () => {
       name: form.getValue("name"),
       state: form.getValue("state").id,
       city: form.getValue("city"),
-      total_area: parseInt(form.getValue("total_area")),
-      areable_area: parseInt(form.getValue("areable_area")),
-      vegetation_area: parseInt(form.getValue("vegetation_area")),
+      totalArea: parseInt(form.getValue("totalArea")),
+      areableArea: parseInt(form.getValue("areableArea")),
+      vegetationArea: parseInt(form.getValue("vegetationArea")),
     };
 
     const response = isEditing ? await updateService.fetch(data) : await createService.fetch(data);
@@ -59,8 +59,11 @@ const Form: React.FC = () => {
       return;
     }
 
-    toast.success("Salvo com sucesso");
-    navigate("/farm");
+    if (response?.status === "OK") {
+      toast.success("Salvo com sucesso");
+      return navigate("/farm");
+    }
+    toast.error("Erro inexperado ao salvar");
   };
 
   React.useEffect(() => {
@@ -70,9 +73,9 @@ const Form: React.FC = () => {
         name: loadService.data.name,
         state: loadService.data.state,
         city: loadService.data.city,
-        total_area: loadService.data.total_area,
-        areable_area: loadService.data.areable_area,
-        vegetation_area: loadService.data.vegetation_area,
+        totalArea: loadService.data.totalArea,
+        areableArea: loadService.data.areableArea,
+        vegetationArea: loadService.data.vegetationArea,
       });
     }
   }, [loadService.data]);
@@ -132,7 +135,7 @@ const Form: React.FC = () => {
     ],
     [
       {
-        schema: "total_area",
+        schema: "totalArea",
         size: { md: 3 },
         type: TextField,
         props: (schema): React.ComponentProps<typeof TextField> => ({
@@ -147,7 +150,7 @@ const Form: React.FC = () => {
         }),
       },
       {
-        schema: "areable_area",
+        schema: "areableArea",
         size: { md: 3 },
         type: TextField,
         props: (schema): React.ComponentProps<typeof TextField> => ({
@@ -162,7 +165,7 @@ const Form: React.FC = () => {
         }),
       },
       {
-        schema: "vegetation_area",
+        schema: "vegetationArea",
         size: { md: 3 },
         type: TextField,
         props: (schema): React.ComponentProps<typeof TextField> => ({

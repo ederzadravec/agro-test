@@ -50,8 +50,11 @@ const Form: React.FC = () => {
       return;
     }
 
-    toast.success("Salvo com sucesso");
-    navigate("/cultivated-plant");
+    if (response?.status === "OK") {
+      toast.success("Salvo com sucesso");
+      return navigate("/cultivated-plant");
+    }
+    toast.error("Erro inexperado ao salvar");
   };
 
   React.useEffect(() => {

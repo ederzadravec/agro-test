@@ -31,19 +31,19 @@ const Login: React.FC = () => {
 
     const response = await loginService.fetch(data);
 
-    console.log({ response });
     if (response?.errors) {
       const errors = getErrors(response, true);
       form.setErrors(errors);
       return;
     }
 
-    if (response?.token) {
-      const token = response.token;
+    if (response?.data?.token) {
+      const token = response.data.token;
 
       setAuth({ isLogged: true, token });
 
       navigate("/dashboard");
+      return;
     }
 
     toast.error("Alguma coisa deu errado");

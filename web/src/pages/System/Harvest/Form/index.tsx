@@ -45,8 +45,11 @@ const Form: React.FC = () => {
       return;
     }
 
-    toast.success("Salvo com sucesso");
-    navigate("/harvest");
+    if (response?.status === "OK") {
+      toast.success("Salvo com sucesso");
+      return navigate("/harvest");
+    }
+    toast.error("Erro inexperado ao salvar");
   };
 
   React.useEffect(() => {

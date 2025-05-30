@@ -15,9 +15,14 @@ const List: React.FC = () => {
   const removeService = useService("DELETE", (id) => `/harvest/${id}`, {}, false);
 
   const handleOnRemove = async (data: { id: string }) => {
-    await removeService.fetch({}, data.id);
-    toast.success("Removido com sucesso");
-    listService.fetch();
+    const response = await removeService.fetch({}, data.id);
+
+    if (response?.status === "OK") {
+      toast.success("Removido com sucesso");
+      listService.fetch();
+      return;
+    }
+    toast.error("Erro ao remover");
   };
 
   const onChangePage = (page: number) => {
