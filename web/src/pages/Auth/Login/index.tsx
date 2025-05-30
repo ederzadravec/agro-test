@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { FormGrid, TextField, Button, Footer } from "#/components";
 import type { FormConfig } from "#/components";
@@ -30,17 +31,22 @@ const Login: React.FC = () => {
 
     const response = await loginService.fetch(data);
 
-    if (response.errors) {
+    console.log({ response });
+    if (response?.errors) {
       const errors = getErrors(response, true);
       form.setErrors(errors);
       return;
     }
 
-    const token = response.token;
+    if (response?.token) {
+      const token = response.token;
 
-    setAuth({ isLogged: true, token });
+      setAuth({ isLogged: true, token });
 
-    navigate("/dashboard");
+      navigate("/dashboard");
+    }
+
+    toast.error("Alguma coisa deu errado");
   };
 
   React.useEffect(() => {
@@ -60,6 +66,7 @@ const Login: React.FC = () => {
           value: form.getValue(schema),
           error: form.getError(schema),
           onChange: onChange(schema),
+          "data-testid": "input-login",
         }),
       },
       {
@@ -72,18 +79,19 @@ const Login: React.FC = () => {
           error: form.getError(schema),
           onChange: onChange(schema),
           type: "password",
+          "data-testid": "input-password",
         }),
       },
     ],
   ];
   return (
     <>
-      <S.Title>Login</S.Title>
+      <S.Title data-testid="header">Login</S.Title>
 
       <FormGrid config={formConfig} />
 
       <Footer>
-        <Button onClick={form.trySave(handelOnSubmit)} loading={loginService.loading}>
+        <Button onClick={form.trySave(handelOnSubmit)} loading={loginService.loading} data-testid="button-login">
           Entrar
         </Button>
       </Footer>

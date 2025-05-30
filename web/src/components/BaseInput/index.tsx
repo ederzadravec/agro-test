@@ -1,17 +1,17 @@
-import * as S from './styled';
+import * as S from "./styled";
 
 interface BaseInputProps {
   error?: string;
   children: any;
-  direction?: 'row' | 'column';
+  direction?: "row" | "column";
 }
 
-const BaseInput: React.FC<BaseInputProps> = ({ children, error, direction = 'column' }) => {
+const BaseInput: React.FC<BaseInputProps> = ({ children, error, direction = "column" }) => {
   return (
     <S.Container direction={direction}>
       {children}
 
-      <S.Error>{error}</S.Error>
+      <S.Error data-testid="error">{error}</S.Error>
     </S.Container>
   );
 };

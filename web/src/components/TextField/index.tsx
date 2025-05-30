@@ -15,7 +15,8 @@ interface TextFieldProps extends Omit<React.HTMLAttributes<HTMLInputElement>, "o
   mask?: Types.MaskEnum;
   maskConfig?: Types.MaskConfig;
   disabled?: boolean;
-  type?: string
+  type?: string;
+  "data-testid"?: string;
 }
 
 const TextField: React.FC<TextFieldProps> = ({
@@ -40,14 +41,22 @@ const TextField: React.FC<TextFieldProps> = ({
   return (
     <BaseInput error={error}>
       <S.Container>
-        <S.Label>
+        <S.Label data-testid="label">
           {label}
 
           {isRequired ? " *" : ""}
         </S.Label>
 
         <S.InputContent>
-          <S.Input {...maskProps} disabled={disabled} type="text" onChange={handleOnChange} value={value || ""} {...props} />
+          <S.Input
+            data-testid="input"
+            {...maskProps}
+            disabled={disabled}
+            type="text"
+            onChange={handleOnChange}
+            value={value || ""}
+            {...props}
+          />
         </S.InputContent>
       </S.Container>
     </BaseInput>
